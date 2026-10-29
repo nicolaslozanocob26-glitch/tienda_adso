@@ -37,8 +37,15 @@ def crear(datos: ClienteCrear):
         with conectar() as db:
             with db.cursor() as cur:
                 cur.execute(
-                    "INSERT INTO clientes (nombre, correo) VALUES (%s, %s)",
-                    (datos.nombre, str(datos.correo))
+                    "INSERT INTO clientes "
+                    "(nombre, apellido, correo, telefono) "
+                    "VALUES (%s, %s, %s, %s)",
+                    (
+                        datos.nombre,
+                        datos.apellido,
+                        str(datos.correo),
+                        datos.telefono
+                    )
                 )
 
                 nuevo_id = cur.lastrowid

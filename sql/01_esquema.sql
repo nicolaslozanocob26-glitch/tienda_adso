@@ -7,7 +7,9 @@ USE tienda_adso;
 CREATE TABLE IF NOT EXISTS clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    correo VARCHAR(120) NOT NULL UNIQUE
+    apellido VARCHAR(100) NULL,
+    correo VARCHAR(120) NOT NULL UNIQUE,
+    telefono VARCHAR(30) NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS productos (

@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda ADSO | Panel de administración</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">T</div>
+            <div>
+                <h2>Tienda ADSO</h2>
+                <span>Panel administrativo</span>
+            </div>
+        </div>
+
+        <nav>
+            <button class="nav-item active" data-section="inicio">
+                <span>⌂</span> Inicio
+            </button>
+
+            <button class="nav-item" data-section="clientes">
+                <span>♙</span> Clientes
+            </button>
+
+            <button class="nav-item" data-section="productos">
+                <span>▣</span> Productos
+            </button>
+
+            <button class="nav-item" data-section="pedidos">
+                <span>🛒</span> Pedidos
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <span>API REST FastAPI</span>
+            <a href="http://127.0.0.1:8000/docs" target="_blank">
+                Abrir Swagger ↗
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1 id="page-title">Panel principal</h1>
+                <p>Bienvenido al sistema de gestión de Tienda ADSO.</p>
+            </div>
+
+            <div class="user-profile">
+                <div class="avatar">A</div>
+                <div>
+                    <strong>Administrador</strong>
+                    <span>Gestión de tienda</span>
+                </div>
+            </div>
+        </header>
+
+        <section id="inicio" class="section active">
+            <div class="welcome">
+                <div>
+                    <span>GESTIÓN COMERCIAL</span>
+                    <h2>Administra tu tienda fácilmente</h2>
+                    <p>Controla clientes, productos e inventario desde un solo lugar.</p>
+                </div>
+                <div class="welcome-icon">📊</div>
+            </div>
+
+            <div class="stats-grid">
+                <article class="stat-card">
+                    <div class="stat-icon blue">♙</div>
+                    <span>Total de clientes</span>
+                    <h3 id="total-clientes">0</h3>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon green">▣</div>
+                    <span>Total de productos</span>
+                    <h3 id="total-productos">0</h3>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-icon orange">🛒</div>
+                    <span>Total de pedidos</span>
+                    <h3 id="total-pedidos">0</h3>
+                </article>
+            </div>
+
+            <div class="content-card">
+                <h3>Conexión con el servidor</h3>
+                <p id="api-status">Comprobando conexión con FastAPI...</p>
+                <a href="http://127.0.0.1:8000/docs" target="_blank" class="primary-button">
+                    Consultar documentación API
+                </a>
+            </div>
+        </section>
+
+        <section id="clientes" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>Gestión de clientes</h2>
+                    <p>Consulta y registra los clientes de la tienda.</p>
+                </div>
+                <button class="primary-button" id="btn-nuevo-cliente">
+                    + Nuevo cliente
+                </button>
+            </div>
+
+            <div id="form-cliente" class="content-card hidden">
+                <h3>Registrar cliente</h3>
+
+                <form id="formulario-cliente">
+                    <div class="form-grid">
+                        <input name="nombre" placeholder="Nombre" required>
+                        <input name="apellido" placeholder="Apellido" required>
+                        <input name="email" type="email" placeholder="Correo electrónico" required>
+                        <input name="telefono" placeholder="Teléfono" maxlength="30">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Guardar cliente</button>
+                        <button type="button" class="secondary-button" id="cancelar-cliente">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="content-card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-clientes"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="productos" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>Gestión de productos</h2>
+                    <p>Administra los productos y las existencias.</p>
+                </div>
+                <button class="primary-button" id="btn-nuevo-producto">
+                    + Nuevo producto
+                </button>
+            </div>
+
+            <div id="form-producto" class="content-card hidden">
+                <h3>Registrar producto</h3>
+
+                <form id="formulario-producto">
+                    <div class="form-grid">
+                        <input name="nombre" placeholder="Nombre del producto" required>
+                        <input name="descripcion" placeholder="Descripción">
+                        <input name="precio" type="number" min="0.01" step="0.01" placeholder="Precio" required>
+                        <input name="stock" type="number" min="0" placeholder="Stock" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Guardar producto</button>
+                        <button type="button" class="secondary-button" id="cancelar-producto">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="content-card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Producto</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-productos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="pedidos" class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>Gestión de pedidos</h2>
+                    <p>Consulta y registra pedidos de clientes.</p>
+                </div>
+                <button class="primary-button" id="btn-nuevo-pedido">
+                    + Nuevo pedido
+                </button>
+            </div>
+
+            <div id="form-pedido" class="content-card hidden">
+                <h3>Registrar pedido</h3>
+
+                <form id="formulario-pedido">
+                    <label for="cliente-pedido">Seleccionar cliente</label>
+                    <select id="cliente-pedido" required>
+                        <option value="">Selecciona un cliente</option>
+                    </select>
+
+                    <div id="pedido-items">
+                        <div class="pedido-item">
+                            <select class="producto-pedido" required>
+                                <option value="">Selecciona un producto</option>
+                            </select>
+                            <input class="cantidad-pedido" type="number" min="1" value="1" required>
+                        </div>
+                    </div>
+
+                    <button type="button" class="secondary-button" id="agregar-item">
+                        + Agregar producto
+                    </button>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-button">Crear pedido</button>
+                        <button type="button" class="secondary-button" id="cancelar-pedido">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="content-card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID pedido</th>
+                                <th>Cliente</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-pedidos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <div id="notificacion" class="notification"></div>
+
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

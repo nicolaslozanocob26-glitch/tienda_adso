@@ -5,7 +5,9 @@ from pydantic import BaseModel, Field, EmailStr
 
 class ClienteCrear(BaseModel):
     nombre: str = Field(min_length=2, max_length=100)
+    apellido: str | None = Field(default="", max_length=100)
     correo: EmailStr
+    telefono: str | None = Field(default=None, max_length=30)
 
 
 class ClienteRespuesta(ClienteCrear):

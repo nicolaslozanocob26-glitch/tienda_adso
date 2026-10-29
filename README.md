@@ -27,6 +27,8 @@ API REST construida con FastAPI para administrar clientes, productos y pedidos. 
 
    Ejecuta primero `01_esquema.sql` y después `02_datos_prueba.sql`.
 
+   Si la base de datos ya existía antes de agregar apellido y teléfono a los clientes, ejecuta también `sql/03_migrar_clientes.sql`. La migración conserva los registros existentes.
+
 ## Iniciar la API
 
 Desde la raíz del proyecto, con el entorno virtual activo:
